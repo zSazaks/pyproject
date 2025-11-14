@@ -21,3 +21,18 @@ services:
         max-size: "200k"
     volumes:
       - ./prod/mysite/database:/app/database
+      - static_volume:/app/prod/mysite/staticfiles
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - static_volume:/static
+
+volumes:
+  static_volume:
